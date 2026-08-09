@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: dim_produit
+    description: "Référentiel des produits (une ligne par produit), avec sa hiérarchie catégorie → produit. Dimension du modèle en étoile."
+    columns:
+      - name: produit_key
+        description: "Clé de substitution du produit (hash de catégorie + produit). Clé primaire, reliée à fct_ventes."
+        tests: [unique, not_null]
+      - name: categorie
+        description: "Famille du produit (Beauté, Électronique, Sport…)."
+      - name: produit
+        description: "Libellé du produit."
+
+  - name: dim_client
+    description: "Référentiel des clients (une ligne par client). Dimension du modèle en étoile."
+    columns:
+      - name: client_key
+        description: "Clé de substitution du client. Clé primaire, reliée à fct_ventes."
+        tests: [unique, not_null]
+      - name: client
+        description: "Nom du client."
+
+  - name: dim_pays
+    description: "Référentiel géographique (une ligne par pays). Dimension du modèle en étoile."
+    columns:
+      - name: pays_key
+        description: "Clé de substitution du pays. Clé primaire."
+        tests: [unique, not_null]
+      - name: pays
+        description: "Nom du pays."
+
+  - name: dim_canal
+    description: "Référentiel des canaux de vente (App, Magasin, Web). Dimension du modèle en étoile."
+    columns:
+      - name: canal_key
+        description: "Clé de substitution du canal. Clé primaire."
+        tests: [unique, not_null]
+      - name: canal
+        description: "Canal de vente."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['App', 'Magasin', 'Web']
+
+  - name: fct_ventes
+    description: "Table de faits au grain d'une ligne de vente (order_id unique). Contient les clés vers les dimensions et les mesures. Cœur du modèle en étoile."
+    columns:
+      - name: order_id
+        description: "Identifiant unique de la vente (dimension dégénérée)."
+        tests: [unique, not_null]
+      - name: produit_key
+        description: "Clé étrangère vers dim_produit."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_produit')
+                field: produit_key
+      - name: client_key
+        description: "Clé étrangère vers dim_client."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_client')
+                field: client_key
+      - name: montant_total
+        description: "Chiffre d'affaires de la ligne de vente (CA)."
+      - name: marge
+        description: "Marge dérivée = montant_total - remise - frais_livraison. Convention interne (pas de coût d'achat dans la source), documentée à défaut d'un coût comptable réel."

@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: stg_ventes
+    description: "Couche de préparation (staging) : nettoyage 1:1 de la source ventes_10000 — renommage, typage, trim des libellés. Aucune jointure ni logique métier. Passage Bronze → Silver, socle de tous les modèles marts."
+    columns:
+      - name: order_id
+        description: "Identifiant unique de la vente. Définit le grain (une ligne = une commande)."
+        tests: [unique, not_null]
+      - name: date_vente
+        description: "Date de la vente (typée date). Alimente la jointure vers dim_date."
+        tests: [not_null]
+      - name: client
+        description: "Nom du client (nettoyé)."
+      - name: categorie
+        description: "Famille du produit."
+      - name: produit
+        description: "Libellé du produit."
+      - name: pays
+        description: "Pays de la vente."
+      - name: canal_vente
+        description: "Canal de vente (App, Magasin, Web)."
+      - name: montant_total
+        description: "Chiffre d'affaires de la ligne de vente."
+        tests: [not_null]
+      - name: remise
+        description: "Remise appliquée sur la vente."
+      - name: frais_livraison
+        description: "Frais de livraison de la vente."
