@@ -73,3 +73,16 @@ models:
         description: "Chiffre d'affaires de la ligne de vente (CA)."
       - name: marge
         description: "Marge dérivée = montant_total - remise - frais_livraison."
+  - name: fct_stock_mensuel
+    description: >
+      Inventaire mensuel (periodic snapshot) : une ligne par produit et par fin de mois,
+      stock reconstitué à cette date depuis le flux de mouvements (report pour les mois
+      sans mouvement). Grain = produit × date_photo. Ordre de cumul déterministe :
+      le même jour, réception avant vente.
+    columns:
+      - name: date_photo
+        description: "Dernier jour du mois de la photo."
+        tests: [not_null]
+      - name: stock_fin_de_mois
+        description: "Stock reconstitué au dernier jour du mois."
+        tests: [not_null]
