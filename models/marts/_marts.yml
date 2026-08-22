@@ -44,10 +44,16 @@ models:
                 values: ['App', 'Magasin', 'Web']
 
   - name: fct_ventes
-    description: "Table de faits au grain d'une ligne de vente (order_id unique). Contient les clés vers les dimensions et les mesures. Cœur du modèle en étoile."
+    description: >
+      Table de faits au grain d'une ligne de vente (order_id unique).
+      Matérialisée en incrémental (unique_key = order_id) : à chaque run, seules
+      les ventes plus récentes que la date max déjà chargée sont ajoutées (merge),
+      plutôt que de reconstruire toute la table. Optimise le temps de calcul et
+      les coûts sur gros volumes. Utiliser --full-refresh pour reconstruire (init
+      ou changement de logique).
     columns:
       - name: order_id
-        description: "Identifiant unique de la vente (dimension dégénérée)."
+        description: "Identifiant unique de la vente. Grain de la table, clé du merge incrémental."
         tests: [unique, not_null]
       - name: produit_key
         description: "Clé étrangère vers dim_produit."
@@ -66,4 +72,4 @@ models:
       - name: montant_total
         description: "Chiffre d'affaires de la ligne de vente (CA)."
       - name: marge
-        description: "Marge dérivée = montant_total - remise - frais_livraison. Convention interne (pas de coût d'achat dans la source), documentée à défaut d'un coût comptable réel."
+        description: "Marge dérivée = montant_total - remise - frais_livraison."
