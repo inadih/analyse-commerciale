@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Couche Bronze — données brutes ingérées telles quelles."
+    database: ANALYTICS
+    schema: DBT
+    tables:
+      - name: ventes_10000
+        description: "Ventes brutes chargées depuis le CSV source."
+      - name: produits_ref
+        description: "Référentiel produit issu de l'ERP (prix, fournisseur). Source du snapshot d'historisation."
+      - name: mouvements_stock
+        description: "Flux des mouvements de stock (réceptions +, ventes -) issu de l'ERP/WMS. Source du periodic snapshot d'inventaire mensuel."
+      - name: stg_mouvements_stock
+        description: "Mouvements de stock avec quantité signée (réception +, vente -)."
