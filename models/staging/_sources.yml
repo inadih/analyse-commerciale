@@ -11,6 +11,6 @@ sources:
       - name: produits_ref
         description: "Référentiel produit issu de l'ERP (prix, fournisseur). Source du snapshot d'historisation."
       - name: mouvements_stock
-        description: "Flux des mouvements de stock (réceptions +, ventes -) issu de l'ERP/WMS. Source du periodic snapshot d'inventaire mensuel."
-      - name: stg_mouvements_stock
-        description: "Mouvements de stock avec quantité signée (réception +, vente -)."
+        description: "Flux des mouvements de stock (réceptions +, ventes -) issu de l'ERP/WMS. Source de l'inventaire mensuel."
+      - name: taux_change
+        description: "Taux de change quotidiens (base EUR) ingérés depuis l'API Frankfurter. Source du calcul multi-devises."
