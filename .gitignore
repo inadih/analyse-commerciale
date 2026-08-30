@@ -5,3 +5,7 @@ logs/
 .env
 profiles.yml
 .user.yml
+.env
+
+
+ingestion/.env
