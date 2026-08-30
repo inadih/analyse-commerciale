@@ -7,3 +7,7 @@ models:
       function SUM OVER. Ordre déterministe : date puis réception avant vente.
   - name: int_fins_de_mois
     description: "Grille produit × dernier jour de chaque mois (last_day + cross join sur dim_date)."
+  - name: int_ventes_devises
+    description: >
+      Conversion des ventes en USD au taux de change du jour de la vente
+      (lookup temporel : dernier taux connu ≤ date de vente, gère week-ends/fériés).

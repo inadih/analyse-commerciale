@@ -33,6 +33,10 @@ try:
         )
     """)
 
+        # Vider la table avant rechargement (évite les doublons)
+    print("Vidage de la table...")
+    cur.execute("TRUNCATE TABLE ANALYTICS.DBT.TAUX_CHANGE")
+
     # --- 4. Créer un stage ---
     cur.execute("CREATE STAGE IF NOT EXISTS ANALYTICS.DBT.STAGE_TAUX")
 

@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: stg_ventes
+    description: "Staging des ventes : nettoyage 1:1 de la source ventes_10000 (renommage, typage, trim). Bronze → Silver."
+  - name: stg_mouvements_stock
+    description: "Mouvements de stock avec quantité signée (réception +, vente -)."
+  - name: stg_taux_change
+    description: "Staging des taux de change quotidiens (base EUR) depuis l'API Frankfurter."

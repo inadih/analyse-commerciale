@@ -7,7 +7,7 @@ import requests   # pour appeler l'API HTTP
 import csv         # pour écrire le résultat en CSV
 
 # --- 1. L'appel API (ce que Bruno faisait) ---
-URL = "https://api.frankfurter.dev/v1/2024-01-01..2024-01-31"
+URL = "https://api.frankfurter.dev/v1/2024-01-01..2024-12-31"
 PARAMS = {
     "base": "EUR",
     "symbols": "USD,GBP,CHF",
