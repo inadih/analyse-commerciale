@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: int_stock_cumule
+    description: >
+      Stock cumulé (running total) après chaque mouvement, par produit, via window
+      function SUM OVER. Ordre déterministe : date puis réception avant vente.
+  - name: int_fins_de_mois
+    description: "Grille produit × dernier jour de chaque mois (last_day + cross join sur dim_date)."
